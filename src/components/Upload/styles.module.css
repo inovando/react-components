@@ -1,0 +1,62 @@
+.container {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.box {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  border-radius: 6px;
+  width: 100%;
+  border: 2px dashed #CFCFD7;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  margin-right: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.thumb {
+  margin-top: 16px;
+  position: relative;
+  height: 100px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.file {
+  margin-bottom: 4px;
+}
+
+.size {
+  color: #888;
+  font-size: 14px;
+}

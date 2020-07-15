@@ -1,6 +1,4 @@
-import React from 'react'
-import styles from './styles.module.css'
+import Upload from './components/Upload'
+import UploadField from './components/UploadField'
 
-export const ExampleComponent = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+export { Upload, UploadField }
