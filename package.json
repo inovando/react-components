@@ -1,7 +1,6 @@
 {
   "name": "@inovando/react-components",
-  "version": "1.0.1",
-  "description": ":atom: Very opinionated reusable components (some binded to final-form exclusively)",
+  "version": "1.0.3",
   "author": "inovando",
   "license": "MIT",
   "repository": "inovando/react-components",
