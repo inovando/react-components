@@ -1,6 +1,6 @@
 # @inovando/react-components
 
-> Very opinionated reusable components (some binded to final-form exclusively)
+> :atom: Very opinionated reusable components (some binded to final-form exclusively)
 
 [![NPM](https://img.shields.io/npm/v/@inovando/react-components.svg)](https://www.npmjs.com/package/@inovando/react-components) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
