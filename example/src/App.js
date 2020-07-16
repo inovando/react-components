@@ -11,6 +11,7 @@ const App = () => {
         console.log('files:', files)
       }}
       label="Arraste arquivos ou clique aqui para fazer upload"
+      accept="image/*"
     />
   </div>
 }

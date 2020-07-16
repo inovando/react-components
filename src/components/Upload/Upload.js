@@ -1,25 +1,36 @@
-import React, { useCallback, useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import styles from "./styles.module.css";
+import { activeStyle, rejectStyle } from "./styles";
+import Cloud from "../Cloud";
+import trash from "../images/trash.svg";
 
 function formatBytes(bytes, decimals = 2) {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return "0 Bytes";
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-};
+}
 
-function Upload({ onChange, label = '', ...rest }) {
+function Upload({ onChange, label = "", errorText = "", ...rest }) {
   const [files, setFiles] = useState([]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  useEffect(() => {
+    onChange(files);
+  }, [files]);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject,
+  } = useDropzone({
     onDrop: (acceptedFiles) => {
-      onChange(acceptedFiles);
       setFiles(
         acceptedFiles.map((file) => {
           if (!file.type.includes("image/")) return file;
@@ -29,37 +40,63 @@ function Upload({ onChange, label = '', ...rest }) {
         })
       );
     },
-    ...rest
+    ...rest,
   });
 
-  const thumbs = files.map((file) => {
+  const thumbs = files.map((file, index) => {
     return (
-      <div
-        className={styles.thumb}
-        key={file.name}
-      >
-        <div className={styles.image} style={file.preview && { backgroundImage: `url(${file.preview})` }}>
-          {!file.preview && file.name && file.name.split('.')[file.name.split('.').length - 1]}
+      <div className={styles.thumb} key={file.name}>
+        <div className={styles.image}>
+          {file.preview && <img src={file.preview} />}
+          {!file.preview &&
+            file.name &&
+            file.name.split(".")[file.name.split(".").length - 1]}
         </div>
         <aside>
-          <div className={styles.file}>{file.name}</div>
-          <div className={styles.size}>
-            {formatBytes(file.size)}
+          <div className={styles.file}>
+            <div className={styles.filename}>
+              {file.name.split(".").slice(0, -1).join(".")}
+            </div>
+            <div className={styles.extension}>
+              .{file.name.split(".")[file.name.split(".").length - 1]}
+            </div>
           </div>
+          <div className={styles.size}>{formatBytes(file.size)}</div>
         </aside>
+        <button
+          onClick={() =>
+            setFiles(files.filter((file, fileIndex) => index !== fileIndex))
+          }
+          className={styles.delete}
+          type="button"
+        >
+          <img src={trash} />
+        </button>
       </div>
     );
   });
 
+  const style = useMemo(
+    () => ({
+      ...(isDragActive ? activeStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isDragActive, isDragReject]
+  );
+
   return (
     <section className={styles.container}>
-      <div className={`${styles.box} ${isDragActive && styles.active}`} {...getRootProps()}>
+      <div className={styles.box} {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <div>
-          <p>{label}</p>
-        </div>
+        <Cloud
+          color={
+            isDragReject ? "#f44336" : isDragActive ? "#25abf2" : "#CECFD1"
+          }
+        />
+        <p>{label}</p>
       </div>
       <div className={styles.preview}>{thumbs}</div>
+      {errorText && <div className={styles.error}>{errorText}</div>}
     </section>
   );
 }
