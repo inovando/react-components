@@ -89,11 +89,36 @@
   font-size: 14px;
 }
 
-.delete {
+.delete, .rejected button {
   -webkit-appearance: none;
   border: none;
   background: none;
   margin-right: 16px;
   outline: none;
   cursor: pointer;
+}
+
+.rejected {
+  border-radius: 6px;
+  width: 100%;
+  min-height: 48px;
+  padding: 6px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ff9800;
+  margin-top: 8px;
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.rejected p {
+  margin: 0;
+}
+
+.rejected button {
+  margin-right: 0;
+  margin-left: 16px;
 }

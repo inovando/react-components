@@ -1,9 +1,12 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styles from "./styles.module.css";
 import { activeStyle, rejectStyle } from "./styles";
 import Cloud from "../Cloud";
 import trash from "../images/trash.svg";
+import close from "../images/close.svg";
+import { locales } from "./i18n";
+import template from 'lodash.template';
 
 function formatBytes(bytes, decimals = 2) {
   if (bytes === 0) return "0 Bytes";
@@ -17,12 +20,21 @@ function formatBytes(bytes, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
-function Upload({ onChange, label = "", errorText = "", ...rest }) {
-  const [files, setFiles] = useState([]);
+function Upload({
+  onChange = () => {},
+  label = "",
+  errorText = "",
+  value = [],
+  locale = "pt",
+  maxSize = null,
+  ...rest
+}) {
+  const [rejectedFiles, setRejectedFiles] = useState([]);
 
-  useEffect(() => {
-    onChange(files);
-  }, [files]);
+  const maxSizeInBytes = useMemo(() => {
+    if (!maxSize) return null;
+    return maxSize * (1024 * 1024);
+  }, [maxSize]);
 
   const {
     getRootProps,
@@ -31,7 +43,7 @@ function Upload({ onChange, label = "", errorText = "", ...rest }) {
     isDragReject,
   } = useDropzone({
     onDrop: (acceptedFiles) => {
-      setFiles(
+      onChange(
         acceptedFiles.map((file) => {
           if (!file.type.includes("image/")) return file;
           return Object.assign(file, {
@@ -40,10 +52,14 @@ function Upload({ onChange, label = "", errorText = "", ...rest }) {
         })
       );
     },
+    onDropRejected: (rejectedFiles) => {
+      setRejectedFiles(rejectedFiles);
+    },
+    maxSize: maxSizeInBytes,
     ...rest,
   });
 
-  const thumbs = files.map((file, index) => {
+  const thumbs = value.map((file, index) => {
     return (
       <div className={styles.thumb} key={file.name}>
         <div className={styles.image}>
@@ -65,7 +81,7 @@ function Upload({ onChange, label = "", errorText = "", ...rest }) {
         </aside>
         <button
           onClick={() =>
-            setFiles(files.filter((file, fileIndex) => index !== fileIndex))
+            onChange(value.filter((file, fileIndex) => index !== fileIndex))
           }
           className={styles.delete}
           type="button"
@@ -95,6 +111,23 @@ function Upload({ onChange, label = "", errorText = "", ...rest }) {
         />
         <p>{label}</p>
       </div>
+      {rejectedFiles.map(({ errors, file: { name } }, rejectedIndex) => (
+        <div key={name} className={styles.rejected}>
+          <p>
+            {template(locales[locale][errors[0].code], {
+              interpolate: /{{([\s\S]+?)}}/g
+            })({ maxSize: formatBytes(maxSizeInBytes) })}: <strong>{name}</strong>
+          </p>
+          <button
+            onClick={() => setRejectedFiles(
+              rejectedFiles.filter((_item, index) => index !== rejectedIndex)
+            )}
+            type="button"
+          >
+            <img src={close} />
+          </button>
+        </div>
+      ))}
       <div className={styles.preview}>{thumbs}</div>
       {errorText && <div className={styles.error}>{errorText}</div>}
     </section>

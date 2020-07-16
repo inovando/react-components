@@ -12,17 +12,31 @@ npm install --save @inovando/react-components
 
 ## Usage
 
+### `<Upload />`
+
+![Upload Component Demo](docs/component-upload.gif)
+
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import MyComponent from '@inovando/react-components'
-import '@inovando/react-components/dist/index.css'
+import { Upload } from "@inovando/react-components";
+import "@inovando/react-components/dist/index.css";
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+const App = () => {
+  const [files, setFiles] = useState([]);
+
+  return (
+    <Upload
+      onChange={(files) => {
+        setFiles(files);
+      }}
+      label="Arraste arquivos ou clique aqui para fazer upload"
+      value={files}
+      accept="image/*" // accept only images (Optional)
+      maxSize={3} // in mb (Optional)
+    />
+  );
+};
 ```
 
 ## License
