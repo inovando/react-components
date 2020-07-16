@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-function UploadField({name}) {
-  return (
-    <div>
-      {name}
-    </div>
-  )
+function UploadField({ name }) {
+  return <div>{name}</div>;
 }
 
-export default UploadField
+export default UploadField;

@@ -1,19 +1,19 @@
-import React, { useMemo, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import styles from "./styles.module.css";
-import { activeStyle, rejectStyle } from "./styles";
-import Cloud from "../Cloud";
-import trash from "../images/trash.svg";
-import close from "../images/close.svg";
-import { locales } from "./i18n";
+import React, { useMemo, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import styles from './styles.module.css';
+import { activeStyle, rejectStyle } from './styles';
+import Cloud from '../Cloud';
+import trash from '../images/trash.svg';
+import close from '../images/close.svg';
+import { locales } from './i18n';
 import template from 'lodash.template';
 
 function formatBytes(bytes, decimals = 2) {
-  if (bytes === 0) return "0 Bytes";
+  if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
@@ -22,10 +22,10 @@ function formatBytes(bytes, decimals = 2) {
 
 function Upload({
   onChange = () => {},
-  label = "",
-  errorText = "",
+  label = '',
+  errorText = '',
   value = [],
-  locale = "pt",
+  locale = 'pt',
   maxSize = null,
   ...rest
 }) {
@@ -45,11 +45,11 @@ function Upload({
     onDrop: (acceptedFiles) => {
       onChange(
         acceptedFiles.map((file) => {
-          if (!file.type.includes("image/")) return file;
+          if (!file.type.includes('image/')) return file;
           return Object.assign(file, {
             preview: URL.createObjectURL(file),
           });
-        })
+        }),
       );
     },
     onDropRejected: (rejectedFiles) => {
@@ -66,15 +66,15 @@ function Upload({
           {file.preview && <img src={file.preview} />}
           {!file.preview &&
             file.name &&
-            file.name.split(".")[file.name.split(".").length - 1]}
+            file.name.split('.')[file.name.split('.').length - 1]}
         </div>
         <aside>
           <div className={styles.file}>
             <div className={styles.filename}>
-              {file.name.split(".").slice(0, -1).join(".")}
+              {file.name.split('.').slice(0, -1).join('.')}
             </div>
             <div className={styles.extension}>
-              .{file.name.split(".")[file.name.split(".").length - 1]}
+              .{file.name.split('.')[file.name.split('.').length - 1]}
             </div>
           </div>
           <div className={styles.size}>{formatBytes(file.size)}</div>
@@ -97,7 +97,7 @@ function Upload({
       ...(isDragActive ? activeStyle : {}),
       ...(isDragReject ? rejectStyle : {}),
     }),
-    [isDragActive, isDragReject]
+    [isDragActive, isDragReject],
   );
 
   return (
@@ -106,7 +106,7 @@ function Upload({
         <input {...getInputProps()} />
         <Cloud
           color={
-            isDragReject ? "#f44336" : isDragActive ? "#25abf2" : "#CECFD1"
+            isDragReject ? '#f44336' : isDragActive ? '#25abf2' : '#CECFD1'
           }
         />
         <p>{label}</p>
@@ -115,13 +115,16 @@ function Upload({
         <div key={name} className={styles.rejected}>
           <p>
             {template(locales[locale][errors[0].code], {
-              interpolate: /{{([\s\S]+?)}}/g
-            })({ maxSize: formatBytes(maxSizeInBytes) })}: <strong>{name}</strong>
+              interpolate: /{{([\s\S]+?)}}/g,
+            })({ maxSize: formatBytes(maxSizeInBytes) })}
+            : <strong>{name}</strong>
           </p>
           <button
-            onClick={() => setRejectedFiles(
-              rejectedFiles.filter((_item, index) => index !== rejectedIndex)
-            )}
+            onClick={() =>
+              setRejectedFiles(
+                rejectedFiles.filter((_item, index) => index !== rejectedIndex),
+              )
+            }
             type="button"
           >
             <img src={close} />

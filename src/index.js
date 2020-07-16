@@ -1,4 +1,4 @@
-import Upload from './components/Upload'
-import UploadField from './components/UploadField'
+import Upload from './components/Upload';
+import UploadField from './components/UploadField';
 
-export { Upload, UploadField }
+export { Upload, UploadField };
