@@ -2,8 +2,6 @@
   margin-top: 16px;
   margin-bottom: 8px;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
 }
 
 .box {
@@ -121,4 +119,14 @@
 .rejected button {
   margin-right: 0;
   margin-left: 16px;
+}
+
+.error {
+  margin-left: 14px;
+  margin-right: 14px;
+  margin-top: 3px;
+  color: #f44336;
+  font-size: 0.75rem;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
 }

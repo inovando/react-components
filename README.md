@@ -8,6 +8,8 @@
 
 ```bash
 npm install --save @inovando/react-components
+# or
+yarn add @inovando/react-components
 ```
 
 ## Usage
@@ -32,11 +34,67 @@ const App = () => {
       }}
       label="Arraste arquivos ou clique aqui para fazer upload"
       value={files}
-      accept="image/*" // accept only images (Optional)
-      maxSize={3} // in mb (Optional)
+
+      // Accept file type range (Optional)
+      // https://react-dropzone.js.org/#section-accepting-specific-file-types
+      accept="image/*"
+
+      // in mb (Optional)
+      maxSize={3}
+
+      // custom style for container
+      style={{ margin: '0 auto', maxWidth: 400 }}
     />
   );
 };
+```
+
+## [Final-Form](https://final-form.org/react/) Adapters
+
+### Install final-form
+```bash
+npm install --save final-form react-final-form
+# or
+yarn add final-form react-final-form
+```
+
+### `<UploadField />`
+
+```jsx
+import React from 'react';
+import { Form, Field } from 'react-final-form';
+import { UploadField } from '@inovando/react-components';
+import '@inovando/react-components/dist/index.css';
+
+function ExampleForm() {
+  const onSubmit = values => {
+    console.log('values:', values)
+  }
+
+  return (
+    <Form
+      onSubmit={onSubmit}
+      initialValues={{
+        files: [],
+      }}
+      render={({ handleSubmit, submitting }) => (
+        <form onSubmit={handleSubmit} noValidate>
+          <Field
+            name="files"
+            component={UploadField}
+            label="Arraste arquivos ou clique aqui para fazer upload"
+            validate={(value) =>
+              value.length ? undefined : 'Campo obrigatório'
+            }
+          />
+          <button disabled={submitting} type="submit">
+            submit
+          </button>
+        </form>
+      )}
+    />
+  );
+}
 ```
 
 ## License

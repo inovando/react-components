@@ -22,11 +22,15 @@ function formatBytes(bytes, decimals = 2) {
 
 function Upload({
   onChange = () => {},
+  onBlur = () => {},
+  onFocus = () => {},
+  name = 'upload',
   label = '',
   errorText = '',
   value = [],
   locale = 'pt',
   maxSize = null,
+  style = {},
   ...rest
 }) {
   const [rejectedFiles, setRejectedFiles] = useState([]);
@@ -92,18 +96,21 @@ function Upload({
     );
   });
 
-  const style = useMemo(
+  const conditionalStyle = useMemo(
     () => ({
       ...(isDragActive ? activeStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
+      ...(isDragReject || !!errorText ? rejectStyle : {}),
     }),
-    [isDragActive, isDragReject],
+    [isDragActive, isDragReject, errorText],
   );
 
   return (
-    <section className={styles.container}>
-      <div className={styles.box} {...getRootProps({ style })}>
-        <input {...getInputProps()} />
+    <section className={styles.container} style={style}>
+      <div
+        className={styles.box}
+        {...getRootProps({ style: conditionalStyle, onBlur, onFocus })}
+      >
+        <input name={name} {...getInputProps()} />
         <Cloud
           color={
             isDragReject ? '#f44336' : isDragActive ? '#25abf2' : '#CECFD1'
