@@ -4,6 +4,8 @@
 
 [![NPM](https://img.shields.io/npm/v/@inovando/react-components.svg)](https://www.npmjs.com/package/@inovando/react-components) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
+[Demo](https://inovando.github.io/react-components)
+
 ## Install
 
 ```bash
@@ -59,6 +61,7 @@ yarn add final-form react-final-form
 ```
 
 ### `<UploadField />`
+> [Check out "initialValues" example](https://inovando.github.io/react-components/)
 
 ```jsx
 import React from 'react';
