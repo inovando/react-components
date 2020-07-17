@@ -10,17 +10,17 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "@inovando/react-components": "link:..",
+    "final-form": "^4.20.1",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "@inovando/react-components": "link:.."
+    "react-final-form": "^6.5.1",
+    "react-scripts": "link:../node_modules/react-scripts"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "prettier": "@santospatrick/prettier-config",
   "browserslist": [
     ">0.2%",
     "not dead",

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 
 function Cloud({ color = '', ...rest }) {
   return (
@@ -8,7 +8,7 @@ function Cloud({ color = '', ...rest }) {
         fill={color}
       />
     </svg>
-  )
+  );
 }
 
 export default Cloud;

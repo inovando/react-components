@@ -1,11 +1,10 @@
-import React from 'react'
+import React from 'react';
+import Upload from './Upload';
 
-function UploadField({name}) {
+function UploadField({ input, meta, ...rest }) {
   return (
-    <div>
-      {name}
-    </div>
-  )
+    <Upload {...input} errorText={meta.touched ? meta.error : ''} {...rest} />
+  );
 }
 
-export default UploadField
+export default UploadField;
