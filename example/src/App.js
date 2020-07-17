@@ -62,6 +62,46 @@ const App = () => {
             </form>
           )}
         />
+
+        <h3>
+          UploadField (with{' '}
+          <a href="https://final-form.org/docs/react-final-form/types/FormProps#initialvalues">
+            initialValues
+          </a>
+          )
+        </h3>
+        <Form
+          onSubmit={onSubmit}
+          initialValues={{
+            files: [
+              {
+                name: 'beach.jpg',
+                size: 1902381,
+                preview:
+                  'https://images.unsplash.com/photo-1502759683299-cdcd6974244f?auto=format&fit=crop&w=440&h=220&q=60',
+              },
+            ],
+          }}
+          render={({ handleSubmit, submitting, values }) => (
+            <form onSubmit={handleSubmit} noValidate>
+              <pre style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {JSON.stringify(values, null, 2)}
+              </pre>
+              <Field
+                name="files"
+                component={UploadField}
+                label="Arraste arquivos ou clique aqui para fazer upload"
+                validate={(value) =>
+                  value.length ? undefined : 'Campo obrigatório'
+                }
+                style={{ margin: '0 auto', maxWidth: 400 }}
+              />
+              <button disabled={submitting} type="submit">
+                submit
+              </button>
+            </form>
+          )}
+        />
       </div>
     </div>
   );
