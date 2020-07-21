@@ -100,6 +100,47 @@ function ExampleForm() {
 }
 ```
 
+### `<MoneyField />` (based on [React Number Format](https://github.com/s-yadav/react-number-format))
+> [Check out "initialValues" example](https://inovando.github.io/react-components/)
+
+```jsx
+import React from 'react';
+import { Form, Field } from 'react-final-form';
+import { MoneyField } from '@inovando/react-components';
+import '@inovando/react-components/dist/index.css';
+
+function ExampleForm() {
+  const onSubmit = values => {
+    console.log('values:', values)
+  }
+
+  return (
+    <Form
+      onSubmit={onSubmit}
+      initialValues={{
+        money: 0.5,
+      }}
+      render={({ handleSubmit, submitting }) => (
+        <form onSubmit={handleSubmit} noValidate>
+          <Field
+            name="money"
+            component={MoneyField}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            label="Valor (R$)"
+            validate={(value) => (value ? undefined : 'Campo obrigatório')}
+          />
+          <button disabled={submitting} type="submit">
+            submit
+          </button>
+        </form>
+      )}
+    />
+  );
+}
+```
+
 ## License
 
 MIT © [inovando](https://github.com/inovando)
