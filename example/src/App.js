@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 
-import { Upload, UploadField } from '@inovando/react-components';
+import { Upload, UploadField, MoneyField } from '@inovando/react-components';
 import '@inovando/react-components/dist/index.css';
 
 const App = () => {
@@ -95,6 +95,50 @@ const App = () => {
                   value.length ? undefined : 'Campo obrigatório'
                 }
                 style={{ margin: '0 auto', maxWidth: 400 }}
+              />
+              <button disabled={submitting} type="submit">
+                submit
+              </button>
+            </form>
+          )}
+        />
+
+        <h3>MoneyField</h3>
+
+        <Form
+          onSubmit={onSubmit}
+          initialValues={{
+            anotherMoney: 0.5,
+            thousandExample: 1000,
+          }}
+          render={({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} noValidate>
+              <Field
+                name="money"
+                component={MoneyField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                label="Valor (R$)"
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
+              />
+              <Field
+                name="anotherMoney"
+                component={MoneyField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                label="Valor (R$) (with initialValues as 0.5)"
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
+              />
+              <Field
+                name="thousandExample"
+                component={MoneyField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                label="Valor (R$) (with initialValues as 1000)"
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
               />
               <button disabled={submitting} type="submit">
                 submit
