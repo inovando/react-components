@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import ptLocale from 'date-fns/locale/pt';
+
 import {
   Upload,
   UploadField,
   MoneyField,
   AutocompleteField,
+  DateField,
 } from '@inovando/react-components';
+
 import '@inovando/react-components/dist/index.css';
+import { parseISO, isBefore, subDays } from 'date-fns';
 
 const provinces = {
   AC: 'Acre',
@@ -243,6 +250,49 @@ const App = () => {
             </form>
           )}
         />
+
+        <h3 style={{ marginTop: 80 }}>DateField</h3>
+
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+          <Form
+            onSubmit={onSubmit}
+            initialValues={{
+              dataFim: new Date().toISOString(),
+            }}
+            render={({ handleSubmit, submitting }) => (
+              <form onSubmit={handleSubmit} noValidate>
+                <Field
+                  name="dataInicio"
+                  component={DateField}
+                  minDate={new Date()} // final-form validation logic must be at "validate" prop
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  label="Data de início"
+                  validate={(value) =>
+                    value && isBefore(subDays(new Date(), 1), parseISO(value))
+                      ? undefined
+                      : 'Campo inválido'
+                  }
+                />
+                <Field
+                  name="dataFim"
+                  component={DateField}
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  label="Data fim"
+                  validate={(value) =>
+                    value ? undefined : 'Campo obrigatório'
+                  }
+                />
+                <button disabled={submitting} type="submit">
+                  submit
+                </button>
+              </form>
+            )}
+          />
+        </MuiPickersUtilsProvider>
       </div>
     </div>
   );

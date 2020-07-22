@@ -195,6 +195,61 @@ function ExampleForm() {
 }
 ```
 
+### `<DateField />` (based on [Material-UI Pickers](https://material-ui-pickers.dev/))
+> [Check out "initialValues" example](https://inovando.github.io/react-components/)
+
+```jsx
+import React from 'react';
+import { Form, Field } from 'react-final-form';
+import { DateField } from '@inovando/react-components';
+import '@inovando/react-components/dist/index.css';
+
+// Material-UI Pickers Dependencies
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import ptLocale from 'date-fns/locale/pt';
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+function ExampleForm() {
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = values => {
+    console.log('values:', values)
+  }
+
+  return (
+     // this tag can be at your global scope, such as "App.js"
+     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, submitting }) => (
+          <form onSubmit={handleSubmit} noValidate>
+            <Field
+              name="dataInicio"
+              component={DateField}
+              minDate={new Date()} // final-form validation logic must be at "validate" prop
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              label="Data de início"
+              validate={(value) =>
+                value && isBefore(subDays(new Date(), 1), parseISO(value))
+                  ? undefined
+                  : 'Campo inválido'
+              }
+            />
+            <button disabled={submitting} type="submit">
+              submit
+            </button>
+          </form>
+        )}
+      />
+    </MuiPickersUtilsProvider>
+  );
+}
+```
+
 ## License
 
 MIT © [inovando](https://github.com/inovando)

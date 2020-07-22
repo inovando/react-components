@@ -1,6 +1,6 @@
 {
   "name": "@inovando/react-components",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "inovando",
   "license": "MIT",
   "repository": "inovando/react-components",
@@ -52,8 +52,11 @@
     "dist"
   ],
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "@material-ui/pickers": "^3.2.10",
+    "date-fns": "^2.15.0",
     "lodash.debounce": "^4.0.8",
     "lodash.template": "^4.5.0",
     "react-dropzone": "^11.0.2",
