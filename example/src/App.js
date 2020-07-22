@@ -1,8 +1,43 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 
-import { Upload, UploadField, MoneyField } from '@inovando/react-components';
+import {
+  Upload,
+  UploadField,
+  MoneyField,
+  AutocompleteField,
+} from '@inovando/react-components';
 import '@inovando/react-components/dist/index.css';
+
+const provinces = {
+  AC: 'Acre',
+  AL: 'Alagoas',
+  AP: 'Amapá',
+  AM: 'Amazonas',
+  BA: 'Bahia',
+  CE: 'Ceará',
+  DF: 'Distrito Federal',
+  ES: 'Espírito Santo',
+  GO: 'Goiás',
+  MA: 'Maranhão',
+  MT: 'Mato Grosso',
+  MS: 'Mato Grosso do Sul',
+  MG: 'Minas Gerais',
+  PA: 'Pará',
+  PB: 'Paraíba',
+  PR: 'Paraná',
+  PE: 'Pernambuco',
+  PI: 'Piauí',
+  RJ: 'Rio de Janeiro',
+  RN: 'Rio Grande do Norte',
+  RS: 'Rio Grande do Sul',
+  RO: 'Rondônia',
+  RR: 'Roraima',
+  SC: 'Santa Catarina',
+  SP: 'São Paulo',
+  SE: 'Sergipe',
+  TO: 'Tocantins',
+};
 
 const App = () => {
   const [files, setFiles] = useState([]);
@@ -10,6 +45,11 @@ const App = () => {
   const onSubmit = (values) => {
     console.log('values:', values);
   };
+
+  const options = Object.keys(provinces).map((key) => ({
+    label: provinces[key],
+    value: key,
+  }));
 
   return (
     <div>
@@ -63,7 +103,7 @@ const App = () => {
           )}
         />
 
-        <h3>
+        <h3 style={{ marginTop: 80 }}>
           UploadField (with{' '}
           <a href="https://final-form.org/docs/react-final-form/types/FormProps#initialvalues">
             initialValues
@@ -103,7 +143,7 @@ const App = () => {
           )}
         />
 
-        <h3>MoneyField</h3>
+        <h3 style={{ marginTop: 80 }}>MoneyField</h3>
 
         <Form
           onSubmit={onSubmit}
@@ -138,6 +178,63 @@ const App = () => {
                 margin="normal"
                 variant="outlined"
                 label="Valor (R$) (with initialValues as 1000)"
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
+              />
+              <button disabled={submitting} type="submit">
+                submit
+              </button>
+            </form>
+          )}
+        />
+
+        <h3 style={{ marginTop: 80 }}>AutocompleteField</h3>
+
+        <Form
+          onSubmit={onSubmit}
+          initialValues={{
+            anotherState: { value: 'PR', label: 'Paraná' },
+            stateAsValue: 'PR',
+          }}
+          render={({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} noValidate>
+              <Field
+                name="state"
+                component={AutocompleteField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                label="Estado"
+                onSearch={(text) => {
+                  console.log('text:', text);
+                }}
+                options={options}
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
+              />
+              <Field
+                name="anotherState"
+                component={AutocompleteField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                label="Estado (with initialValues as an object)"
+                onSearch={(text) => {
+                  console.log('text:', text);
+                }}
+                options={options}
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
+              />
+              <Field
+                name="stateAsValue"
+                component={AutocompleteField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                kind="value"
+                label="Estado (with initialValues as a 'string' or 'number')"
+                onSearch={(text) => {
+                  console.log('text:', text);
+                }}
+                options={options}
                 validate={(value) => (value ? undefined : 'Campo obrigatório')}
               />
               <button disabled={submitting} type="submit">

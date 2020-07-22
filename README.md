@@ -60,7 +60,7 @@ npm install --save final-form react-final-form
 yarn add final-form react-final-form
 ```
 
-### `<UploadField />`
+### `<UploadField />` (based on [React Dropzone](https://react-dropzone.js.org/))
 > [Check out "initialValues" example](https://inovando.github.io/react-components/)
 
 ```jsx
@@ -129,6 +129,60 @@ function ExampleForm() {
             margin="normal"
             variant="outlined"
             label="Valor (R$)"
+            validate={(value) => (value ? undefined : 'Campo obrigatório')}
+          />
+          <button disabled={submitting} type="submit">
+            submit
+          </button>
+        </form>
+      )}
+    />
+  );
+}
+```
+
+### `<AutocompleteField />` (based on [Material-UI Autocomplete](https://material-ui.com/api/autocomplete/))
+> [Check out "initialValues" example](https://inovando.github.io/react-components/)
+
+```jsx
+import React from 'react';
+import { Form, Field } from 'react-final-form';
+import { AutocompleteField } from '@inovando/react-components';
+import '@inovando/react-components/dist/index.css';
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+function ExampleForm() {
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = values => {
+    console.log('values:', values)
+  }
+
+  return (
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit, submitting }) => (
+        <form onSubmit={handleSubmit} noValidate>
+          <Field
+            name="state"
+            component={AutocompleteField}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            label="Estado"
+            options={[
+              { label: 'Paraná', value: 'PR'},
+              // ...
+            ]}
+            onSearch={async (text) => {
+              setLoading(true);
+              await sleep(1000);
+              setLoading(false);
+            }}
+            kind="value" // expects "initialValue" as anything but an object, defaults to "object"
+            delay={500} // "onSearch" debounce delay in ms, defaults to 250
+            loading={loading}
             validate={(value) => (value ? undefined : 'Campo obrigatório')}
           />
           <button disabled={submitting} type="submit">
