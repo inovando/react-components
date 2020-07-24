@@ -64,8 +64,13 @@ function Upload({
   });
 
   const thumbs = value.map((file, index) => {
+    const href = file.preview?.includes('http')
+      ? { href: file.preview, target: '_blank' }
+      : {};
+    let Component = file.preview?.includes('http') ? 'a' : 'div';
+
     return (
-      <div className={styles.thumb} key={file.name}>
+      <Component className={styles.thumb} key={file.name} {...href}>
         <div className={styles.image}>
           {file.preview && <img src={file.preview} />}
           {!file.preview &&
@@ -92,7 +97,7 @@ function Upload({
         >
           <img src={trash} />
         </button>
-      </div>
+      </Component>
     );
   });
 
