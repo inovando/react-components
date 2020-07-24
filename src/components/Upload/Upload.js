@@ -65,12 +65,11 @@ function Upload({
 
   const thumbs = value.map((file, index) => {
     const href = file.preview?.includes('http')
-      ? { href: file.preview, target: '_blank' }
+      ? { onClick: () => window.open(file.preview) }
       : {};
-    let Component = file.preview?.includes('http') ? 'a' : 'div';
 
     return (
-      <Component className={styles.thumb} key={file.name} {...href}>
+      <div className={styles.thumb} key={file.name} {...href}>
         <div className={styles.image}>
           {file.preview && <img src={file.preview} />}
           {!file.preview &&
@@ -89,15 +88,16 @@ function Upload({
           <div className={styles.size}>{formatBytes(file.size)}</div>
         </aside>
         <button
-          onClick={() =>
-            onChange(value.filter((file, fileIndex) => index !== fileIndex))
-          }
+          onClick={(event) => {
+            event.stopPropagation();
+            onChange(value.filter((file, fileIndex) => index !== fileIndex));
+          }}
           className={styles.delete}
           type="button"
         >
           <img src={trash} />
         </button>
-      </Component>
+      </div>
     );
   });
 
