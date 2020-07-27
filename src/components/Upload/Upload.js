@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import Link from '@material-ui/core/Link';
 import { useDropzone } from 'react-dropzone';
 import styles from './styles.module.css';
 import { activeStyle, rejectStyle } from './styles';
@@ -47,14 +48,15 @@ function Upload({
     isDragReject,
   } = useDropzone({
     onDrop: (acceptedFiles) => {
-      onChange(
-        acceptedFiles.map((file) => {
+      onChange([
+        ...value,
+        ...acceptedFiles.map((file) => {
           if (!file.type.includes('image/')) return file;
           return Object.assign(file, {
             preview: URL.createObjectURL(file),
           });
         }),
-      );
+      ]);
     },
     onDropRejected: (rejectedFiles) => {
       setRejectedFiles(rejectedFiles);
@@ -121,7 +123,7 @@ function Upload({
             isDragReject ? '#f44336' : isDragActive ? '#25abf2' : '#CECFD1'
           }
         />
-        <p>{label}</p>
+        <p>{label || locales[locale]['label']}</p>
       </div>
       {rejectedFiles.map(({ errors, file: { name } }, rejectedIndex) => (
         <div key={name} className={styles.rejected}>
@@ -143,8 +145,22 @@ function Upload({
           </button>
         </div>
       ))}
-      <div className={styles.preview}>{thumbs}</div>
       {errorText && <div className={styles.error}>{errorText}</div>}
+      {!!value.length && (
+        <Link
+          style={{
+            marginLeft: 'auto',
+            marginTop: '15px',
+          }}
+          component="button"
+          onClick={() => {
+            onChange([]);
+          }}
+        >
+          {locales[locale]['remove-all']}
+        </Link>
+      )}
+      <div className={styles.preview}>{thumbs}</div>
     </section>
   );
 }

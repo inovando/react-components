@@ -34,8 +34,13 @@ const App = () => {
       onChange={(files) => {
         setFiles(files);
       }}
-      label="Arraste arquivos ou clique aqui para fazer upload"
       value={files}
+
+      // This overrides "locale" prop
+      label="Arraste arquivos ou clique aqui para fazer upload"
+
+      // Only "pt" or "en" yet, defaults to "pt"
+      locale="pt"
 
       // Accept file type range (Optional)
       // https://react-dropzone.js.org/#section-accepting-specific-file-types
