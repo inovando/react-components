@@ -211,6 +211,9 @@ const App = () => {
                 margin="normal"
                 variant="outlined"
                 label="Estado"
+                handleChange={(value) => {
+                  console.log('value:', value);
+                }}
                 onSearch={(text) => {
                   console.log('text:', text);
                 }}

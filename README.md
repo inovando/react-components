@@ -180,6 +180,9 @@ function ExampleForm() {
               { label: 'Paraná', value: 'PR'},
               // ...
             ]}
+            handleChange={(value) => {
+              console.log('value:', value);
+            }}
             onSearch={async (text) => {
               setLoading(true);
               await sleep(1000);

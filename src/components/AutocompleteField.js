@@ -13,6 +13,7 @@ function AutocompleteField({
   options = [],
   getOptionSelected = (option) => option.value,
   loading = false,
+  handleChange = (value) => value,
   ...rest
 }) {
   const showError = !!(meta.touched && meta.error);
@@ -57,10 +58,12 @@ function AutocompleteField({
       onChange={(_event, value) => {
         if (kind === 'object') {
           onChange(value);
+          handleChange(value);
           return;
         }
 
         onChange(getOptionSelected(value));
+        handleChange(getOptionSelected(value));
       }}
       onInputChange={debounce((_event, value) => {
         if (!meta.visited) return;
