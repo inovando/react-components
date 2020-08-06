@@ -160,6 +160,7 @@ function Upload({
             marginTop: '15px',
           }}
           component="button"
+          type="button"
           onClick={() => {
             if (enableDeleteEvent) {
               onDeleteAll();
