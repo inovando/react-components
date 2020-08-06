@@ -48,6 +48,7 @@ const provinces = {
 
 const App = () => {
   const [files, setFiles] = useState([]);
+  const [anotherFiles, setAnotherFiles] = useState([]);
 
   const onSubmit = (values) => {
     console.log('values:', values);
@@ -64,6 +65,7 @@ const App = () => {
       <div className="container">
         <h2>Upload Component</h2>
 
+        <h3>Basic Example</h3>
         <Upload
           onChange={(files) => {
             setFiles(files);
@@ -73,6 +75,27 @@ const App = () => {
           accept="image/*" // accept only images (Optional)
           maxSize={3} // in mb (Optional)
           style={{ margin: '0 auto', maxWidth: 400 }}
+        />
+
+        <h3>enableDeleteEvent prop enabled</h3>
+        <Upload
+          onChange={(files) => {
+            setAnotherFiles(files);
+          }}
+          onDelete={(_file, fileIndex) => {
+            setAnotherFiles(
+              anotherFiles.filter((_item, index) => fileIndex !== index),
+            );
+          }}
+          onDeleteAll={() => {
+            setAnotherFiles([]);
+          }}
+          label="Arraste arquivos ou clique aqui para fazer upload"
+          value={anotherFiles}
+          accept="image/*" // accept only images (Optional)
+          maxSize={3} // in mb (Optional)
+          style={{ margin: '0 auto', maxWidth: 400 }}
+          enableDeleteEvent
         />
 
         <h2 style={{ textAlign: 'center', marginTop: 80 }}>

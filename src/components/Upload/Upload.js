@@ -25,6 +25,8 @@ function Upload({
   onChange = () => {},
   onBlur = () => {},
   onFocus = () => {},
+  onDelete = () => {},
+  onDeleteAll = () => {},
   name = 'upload',
   label = '',
   errorText = '',
@@ -32,6 +34,7 @@ function Upload({
   locale = 'pt',
   maxSize = null,
   style = {},
+  enableDeleteEvent = false,
   ...rest
 }) {
   const [rejectedFiles, setRejectedFiles] = useState([]);
@@ -92,7 +95,11 @@ function Upload({
         <button
           onClick={(event) => {
             event.stopPropagation();
-            onChange(value.filter((file, fileIndex) => index !== fileIndex));
+            if (enableDeleteEvent) {
+              onDelete(file, index);
+            } else {
+              onChange(value.filter((file, fileIndex) => index !== fileIndex));
+            }
           }}
           className={styles.delete}
           type="button"
@@ -154,7 +161,11 @@ function Upload({
           }}
           component="button"
           onClick={() => {
-            onChange([]);
+            if (enableDeleteEvent) {
+              onDeleteAll();
+            } else {
+              onChange([]);
+            }
           }}
         >
           {locales[locale]['remove-all']}
