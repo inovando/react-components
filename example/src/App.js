@@ -59,6 +59,11 @@ const App = () => {
     value: key,
   }));
 
+  const unusualOptions = Object.keys(provinces).map((key) => ({
+    name: provinces[key],
+    id: key,
+  }));
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Inovando React Components</h1>
@@ -224,6 +229,7 @@ const App = () => {
           initialValues={{
             anotherState: { value: 'PR', label: 'Paraná' },
             stateAsValue: 'PR',
+            stateUnusualShape: { name: 'Paraná', id: 'PR' },
           }}
           render={({ handleSubmit, submitting }) => (
             <form onSubmit={handleSubmit} noValidate>
@@ -268,6 +274,21 @@ const App = () => {
                   console.log('text:', text);
                 }}
                 options={options}
+                validate={(value) => (value ? undefined : 'Campo obrigatório')}
+              />
+              <Field
+                name="stateUnusualShape"
+                component={AutocompleteField}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                labelAttr="name"
+                valueAttr="id"
+                label="Estado (with labelAttr as 'name' and valueAttr as 'id')"
+                onSearch={(text) => {
+                  console.log('text:', text);
+                }}
+                options={unusualOptions}
                 validate={(value) => (value ? undefined : 'Campo obrigatório')}
               />
               <button disabled={submitting} type="submit">

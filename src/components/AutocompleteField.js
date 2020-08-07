@@ -10,8 +10,10 @@ function AutocompleteField({
   onSearch = (text) => text,
   delay = 250,
   kind = 'object', // "object" or "value"
+  labelAttr = 'label',
+  valueAttr = 'value',
   options = [],
-  getOptionSelected = (option) => option.value,
+  getOptionSelected = (option) => option[valueAttr],
   loading = false,
   handleChange = (value) => value,
   ...rest
@@ -21,7 +23,7 @@ function AutocompleteField({
   return (
     <Autocomplete
       options={options}
-      getOptionLabel={(option) => option.label || ''}
+      getOptionLabel={(option) => option[labelAttr] || ''}
       getOptionSelected={(option) => {
         if (kind === 'object') {
           return getOptionSelected(option) === getOptionSelected(value);
