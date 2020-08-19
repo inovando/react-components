@@ -16,6 +16,7 @@ function AutocompleteField({
   getOptionSelected = (option) => option[valueAttr],
   loading = false,
   handleChange = (value) => value,
+  freeSolo = false,
   ...rest
 }) {
   const showError = !!(meta.touched && meta.error);
@@ -33,6 +34,7 @@ function AutocompleteField({
       }}
       loading={loading}
       autoHighlight
+      freeSolo={freeSolo}
       renderInput={(params) => (
         <TextField
           {...params}
