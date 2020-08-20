@@ -1,8 +1,12 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import debounce from 'lodash.debounce';
+
+const filter = createFilterOptions();
 
 function AutocompleteField({
   input: { onChange, value, ...inputProps },
@@ -20,6 +24,22 @@ function AutocompleteField({
   ...rest
 }) {
   const showError = !!(meta.touched && meta.error);
+  const freeProps = freeSolo
+    ? {
+        filterOptions: (options, params) => {
+          const filtered = filter(options, params);
+
+          if (params.inputValue !== '') {
+            filtered.push({
+              [labelAttr]: params.inputValue,
+              [valueAttr]: null,
+            });
+          }
+
+          return filtered;
+        },
+      }
+    : {};
 
   return (
     <Autocomplete
@@ -42,7 +62,7 @@ function AutocompleteField({
           error={showError}
           inputProps={{
             ...params.inputProps,
-            autoComplete: 'no',
+            autoComplete: 'off',
           }}
           InputProps={{
             ...params.InputProps,
@@ -79,6 +99,7 @@ function AutocompleteField({
           : options.find((item) => getOptionSelected(item) === value) || null
       }
       {...rest}
+      {...freeProps}
     />
   );
 }
