@@ -20,11 +20,11 @@ function AutocompleteField({
   getOptionSelected = (option) => option[valueAttr],
   loading = false,
   handleChange = (value) => value,
-  freeSolo = false,
+  enableDinamicOption = false,
   ...rest
 }) {
   const showError = !!(meta.touched && meta.error);
-  const freeProps = freeSolo
+  const freeProps = enableDinamicOption
     ? {
         filterOptions: (options, params) => {
           const filtered = filter(options, params);
@@ -54,7 +54,6 @@ function AutocompleteField({
       }}
       loading={loading}
       autoHighlight
-      freeSolo={freeSolo}
       renderInput={(params) => (
         <TextField
           {...params}
