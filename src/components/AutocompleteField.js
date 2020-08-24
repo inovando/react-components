@@ -18,6 +18,7 @@ function AutocompleteField({
   valueAttr = 'value',
   options = [],
   getOptionSelected = (option) => option[valueAttr],
+  getOptionLabel = (option) => option[labelAttr] || '',
   loading = false,
   handleChange = (value) => value,
   enableDinamicOption = false,
@@ -44,7 +45,7 @@ function AutocompleteField({
   return (
     <Autocomplete
       options={options}
-      getOptionLabel={(option) => option[labelAttr] || ''}
+      getOptionLabel={getOptionLabel}
       getOptionSelected={(option) => {
         if (kind === 'object') {
           return getOptionSelected(option) === getOptionSelected(value);
