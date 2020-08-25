@@ -2,7 +2,12 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import NumberFormat from 'react-number-format';
 
-function MoneyField({ input: { onChange, ...inputProps }, meta, ...rest }) {
+function MoneyField({
+  input: { onChange, ...inputProps },
+  meta,
+  handleChange = (value) => value,
+  ...rest
+}) {
   const showError = !!(meta.touched && meta.error);
 
   return (
@@ -19,6 +24,7 @@ function MoneyField({ input: { onChange, ...inputProps }, meta, ...rest }) {
       prefix={'R$ '}
       onValueChange={({ floatValue }) => {
         onChange(floatValue);
+        handleChange(floatValue);
       }}
       {...rest}
     />
