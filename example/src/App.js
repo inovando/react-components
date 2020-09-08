@@ -11,6 +11,7 @@ import {
   MoneyField,
   AutocompleteField,
   DateField,
+  PasswordField,
 } from '@inovando/react-components';
 
 import '@inovando/react-components/dist/index.css';
@@ -300,7 +301,7 @@ const App = () => {
 
         <h3 style={{ marginTop: 80 }}>DateField</h3>
 
-        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+        {/* <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
           <Form
             onSubmit={onSubmit}
             initialValues={{
@@ -339,7 +340,20 @@ const App = () => {
               </form>
             )}
           />
-        </MuiPickersUtilsProvider>
+        </MuiPickersUtilsProvider> */}
+
+        <h2>Password Field</h2>
+
+        <h3>Basic Example</h3>
+
+        <Form
+          onSubmit={onSubmit}
+          render={({ handleSubmit }) => (
+            <form onSubmit={handleSubmit} noValidate>
+              <Field name="password" component={PasswordField} label="Senha" />
+            </form>
+          )}
+        />
       </div>
     </div>
   );
