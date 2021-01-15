@@ -17,7 +17,7 @@ function AutocompleteField({
   labelAttr = 'label',
   valueAttr = 'value',
   options = [],
-  getOptionSelected = (option) => option[valueAttr],
+  getOptionSelected = (option) => (option ? option[valueAttr] : null),
   getOptionLabel = (option) => option[labelAttr] || '',
   loading = false,
   handleChange = (value) => value,
